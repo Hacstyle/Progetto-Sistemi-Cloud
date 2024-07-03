@@ -1,0 +1,59 @@
+- hosts: nodes
+  become: yes
+  
+  tasks:
+
+  - name: Installing conntrack
+    ansible.builtin.dnf:
+      name: conntrack
+      state: present
+
+  - name: Create kubernetes repo file
+    ansible.builtin.copy:
+      content: |
+        [kubernetes]
+        name=Kubernetes
+        baseurl=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
+        enabled=1
+        gpgcheck=1
+        gpgkey=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
+        exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+      dest: /etc/yum.repos.d/kubernetes.repo
+      mode: '0644'
+
+  - name: Installing kubectl
+    ansible.builtin.dnf:
+      name: kubectl
+      state: present
+      disable_excludes: kubernetes
+
+  - name: Installing Docker
+    ansible.builtin.dnf:
+      name: docker
+      state: present
+
+  - name: Starting docker service
+    ansible.builtin.service:
+      name: docker
+      state: started
+      enabled: yes
+
+  - name: Downloading minikube
+    ansible.builtin.shell: curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    
+  - name: Installing minikube
+    ansible.builtin.shell: install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+
+  - name: Add user to docker group
+    ansible.builtin.user:
+      name: ec2-user
+      groups: docker
+      append: true
+
+  - name: Reset ssh connection to allow user changes to affect
+    ansible.builtin.meta:
+      reset_connection
+
+  - name: Starting Minikube
+    ansible.builtin.command: minikube start
+    become: no

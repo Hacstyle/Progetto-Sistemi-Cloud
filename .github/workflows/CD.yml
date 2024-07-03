@@ -19,13 +19,22 @@ jobs:
       uses: webfactory/ssh-agent@v0.4.1
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          
+
+
+    - name: Copy nginx-deployment.yaml to EC2 instance
+      run: |
+          scp ${GITHUB_WORKSPACE::/github/workspace/}/nginx-deployment.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SSH_USER }}/nginx-deployment.yaml
+
+    - name: Copy nginx-service to EC2 instance
+      run: |
+          scp ${GITHUB_WORKSPACE::/github/workspace/}/nginx-deployment.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SSH_USER }}/nginx-service.yaml
+      
     - name: Deploy nginx into kubernetes cluster
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f '$(dirname ${GITHUB_WORKSPACE})/nginx-deployment.yaml' '
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-deployment.yaml' '
           
     - name: Expose a service for nginx deployment
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f '$(dirname ${GITHUB_WORKSPACE})/nginx-deployment.yaml' '
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-service.yaml' '
     
     

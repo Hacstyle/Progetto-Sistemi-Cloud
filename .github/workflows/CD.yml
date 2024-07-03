@@ -2,6 +2,11 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "main" ]
+env:
+  AWS_REGION: us-west-2          
+permissions:
+      id-token: write   # This is required for requesting the JWT
+      contents: read  
  
 jobs:
   deploy:
@@ -12,7 +17,6 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v3
       with:
         aws-role-arn: arn:aws:iam::637423431574:user/Amministratore
-        aws-region: us-west-2
  
     - name: Configure SSH key
       uses: webfactory/ssh-agent@v0.4.1

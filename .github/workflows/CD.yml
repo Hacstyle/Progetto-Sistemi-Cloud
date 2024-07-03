@@ -12,7 +12,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v3
       with:
         aws-role-arn: arn:aws:iam::637423431574:user/Amministratore
-        aws_region: us-west-2
+        aws-region: us-west-2
  
     - name: Configure SSH key
       uses: webfactory/ssh-agent@v0.4.1

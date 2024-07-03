@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: CD
 on:
   push:
     branches: [ "main" ]
@@ -35,10 +35,10 @@ jobs:
       
     - name: Deploy nginx into kubernetes cluster
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-deployment.yaml' '
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-deployment.yaml'
           
     - name: Expose a service for nginx deployment
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-service.yaml' '
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-service.yaml'
     
     

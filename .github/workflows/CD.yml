@@ -22,10 +22,10 @@ jobs:
           
     - name: Deploy nginx into kubernetes cluster
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f "${{ github.action_path }}/nginx-deployment.yaml" '
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f '${GITHUB_WORKSPACE}/nginx-deployment.yaml' '
           
     - name: Expose a service for nginx deployment
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f "${{ github.action_path }}/nginx-service.yaml" '
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f '${GITHUB_WORKSPACE}/nginx-deployment.yaml' '
     
     

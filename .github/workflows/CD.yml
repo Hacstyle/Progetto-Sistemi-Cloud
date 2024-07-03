@@ -40,5 +40,9 @@ jobs:
     - name: Expose a service for nginx deployment
       run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-service.yaml'
-    
-    
+
+    - name: Start nginx service
+      run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'minikube service nginx-service'
+
+          

@@ -12,6 +12,9 @@ Le tecnologie utilizzate sono:
 
 Per poter avviare l'applicazione bisogna che l'host abbia installati i seguenti software:
 
+- Openssh
 - AWS CLI
 - Terraform
 - Ansible
+
+# Istruzioni

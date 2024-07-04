@@ -18,3 +18,30 @@ Per poter avviare l'applicazione bisogna che l'host abbia installati i seguenti 
 - Ansible
 
 # Istruzioni
+
+Scaricate il repository
+
+```
+git clone https://github.com/Hacstyle/Progetto-Sistemi-Cloud.git
+```
+
+Entrate nella cartella del progetto
+
+```
+cd Progetto-Sistemi-Cloud
+```
+
+Create l'infrastruttura
+
+```
+terraform init
+terraform apply
+```
+
+Modificate il file hosts.ini inserendo gli indirizzi ip dei server creati
+```
+[nodes]
+node1 ansible_host=<ipserver>
+node2 ansible_host=<ipserver>
+```
+

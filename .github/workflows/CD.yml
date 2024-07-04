@@ -41,9 +41,9 @@ jobs:
       run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }} 'kubectl apply -f nginx-service.yaml'
 
-    - name: Start nginx service 1
-      run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }} 'minikube service nginx-service'
+   # - name: Start nginx service 1
+   #   run: |
+   #       ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }} 'minikube service nginx-service'
 
     - name: Copy nginx-deployment.yaml to EC2 instance 2
       run: |
@@ -61,9 +61,9 @@ jobs:
       run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }} 'kubectl apply -f nginx-service.yaml'
 
-    - name: Start nginx service 2
-      run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }} 'minikube service nginx-service'
+   # - name: Start nginx service 2
+   #   run: |
+   #       ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }} 'minikube service nginx-service'
 
 
           

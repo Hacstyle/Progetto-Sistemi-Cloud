@@ -25,24 +25,45 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
 
-    - name: Copy nginx-deployment.yaml to EC2 instance
+    - name: Copy nginx-deployment.yaml to EC2 instance 1
       run: |
-          scp -o StrictHostKeyChecking=no ${GITHUB_WORKSPACE}/nginx-deployment.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SSH_USER }}/nginx-deployment.yaml
+          scp -o StrictHostKeyChecking=no ${GITHUB_WORKSPACE}/nginx-deployment.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }}:/home/${{ secrets.SSH_USER }}/nginx-deployment.yaml
 
-    - name: Copy nginx-service to EC2 instance
+    - name: Copy nginx-service to EC2 instance 1
       run: |
-          scp -o StrictHostKeyChecking=no ${GITHUB_WORKSPACE}/nginx-service.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SSH_USER }}/nginx-service.yaml
+          scp -o StrictHostKeyChecking=no ${GITHUB_WORKSPACE}/nginx-service.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }}:/home/${{ secrets.SSH_USER }}/nginx-service.yaml
       
-    - name: Deploy nginx into kubernetes cluster
+    - name: Deploy nginx into kubernetes cluster 1
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-deployment.yaml'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }} 'kubectl apply -f nginx-deployment.yaml'
           
-    - name: Expose a service for nginx deployment
+    - name: Expose a service for nginx deployment 1
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'kubectl apply -f nginx-service.yaml'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }} 'kubectl apply -f nginx-service.yaml'
 
-    - name: Start nginx service
+    - name: Start nginx service 1
       run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} 'minikube service nginx-service'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER1_IP }} 'minikube service nginx-service'
+
+    - name: Copy nginx-deployment.yaml to EC2 instance 2
+      run: |
+          scp -o StrictHostKeyChecking=no ${GITHUB_WORKSPACE}/nginx-deployment.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }}:/home/${{ secrets.SSH_USER }}/nginx-deployment.yaml
+
+    - name: Copy nginx-service to EC2 instance 2
+      run: |
+          scp -o StrictHostKeyChecking=no ${GITHUB_WORKSPACE}/nginx-service.yaml ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }}:/home/${{ secrets.SSH_USER }}/nginx-service.yaml
+      
+    - name: Deploy nginx into kubernetes cluster 2
+      run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }} 'kubectl apply -f nginx-deployment.yaml'
+          
+    - name: Expose a service for nginx deployment 2
+      run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }} 'kubectl apply -f nginx-service.yaml'
+
+    - name: Start nginx service 2
+      run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER2_IP }} 'minikube service nginx-service'
+
 
           

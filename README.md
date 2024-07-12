@@ -8,7 +8,7 @@ Le tecnologie utilizzate sono:
 - Kubernetes, per la gestione dei docker container;
 - GitHub Actions, per la pipeline CD;
 
-Ad essere avviata sarà nginx. 
+Ad essere avviata sarà nginx.  
 
 # Requisiti
 
